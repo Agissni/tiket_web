@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Prediksi Harga Tiket</title>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            width: 500px;
+            border: 1px solid #334155;
+        }
+
+        h2 {
+            text-align: center;
+            color: #38bdf8;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 12px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0284c7;
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #0c4a6e;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #0ea5e9;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Prediksi Harga Tiket Pesawat</h2>
+
+    <form action="/predict" method="post">
+
+        <div class="form-group">
+            <label>Maskapai</label>
+            <select name="airline" required>
+                <option value="0">AirAsia</option>
+                <option value="1">GO_FIRST</option>
+                <option value="2">Indigo</option>
+                <option value="3">SpiceJet</option>
+                <option value="4">Vistara</option>
+                <option value="5">Air India</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Kota Asal</label>
+            <select name="source" required>
+                <option value="0">Delhi</option>
+                <option value="1">Mumbai</option>
+                <option value="2">Bangalore</option>
+                <option value="3">Kolkata</option>
+                <option value="4">Hyderabad</option>
+                <option value="5">Chennai</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Kota Tujuan</label>
+            <select name="destination" required>
+                <option value="0">Delhi</option>
+                <option value="1">Mumbai</option>
+                <option value="2">Bangalore</option>
+                <option value="3">Kolkata</option>
+                <option value="4">Hyderabad</option>
+                <option value="5">Chennai</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Kelas Tiket</label>
+            <select name="class" required>
+                <option value="0">Economy</option>
+                <option value="1">Business</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Jumlah Transit</label>
+            <select name="stops" required>
+                <option value="0">Non Stop</option>
+                <option value="1">1 Stop</option>
+                <option value="2">2+ Stops</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Durasi Perjalanan (Jam)</label>
+            <input
+                type="number"
+                name="duration"
+                min="0"
+                step="0.1"
+                placeholder="Contoh: 2.5"
+                required>
+        </div>
+
+        <div class="form-group">
+            <label>Hari Menuju Keberangkatan</label>
+            <input
+                type="number"
+                name="days_left"
+                min="0"
+                max="365"
+                placeholder="Contoh: 30"
+                required>
+        </div>
+
+        <button type="submit">
+            Hitung Estimasi Harga
+        </button>
+
+    </form>
+
+    {% if prediksi_text %}
+    <div class="result-box">
+
+    <h3>Hasil Prediksi</h3>
+
+    <div style="font-size:24px;font-weight:bold;margin-bottom:15px;">
+        {{ prediksi_text }}
+    </div>
+
+    {% if detail %}
+    <hr style="margin:15px 0;border-color:#38bdf8;">
+
+    <p><b>Maskapai:</b> {{ detail.airline }}</p>
+    <p><b>Kota Asal:</b> {{ detail.source }}</p>
+    <p><b>Kota Tujuan:</b> {{ detail.destination }}</p>
+    <p><b>Kelas:</b> {{ detail.class }}</p>
+    <p><b>Transit:</b> {{ detail.stops }}</p>
+    <p><b>Durasi:</b> {{ detail.duration }} Jam</p>
+    <p><b>Hari Keberangkatan:</b> {{ detail.days_left }} Hari</p>
+
+    <hr style="margin:15px 0;border-color:#38bdf8;">
+
+    <p><b>Model:</b> Random Forest Regressor</p>
+    <p><b>R² Score:</b> 96.34%</p>
+    {% endif %}
+
+    </div>
+    {% endif %}
+
+</body>
+</html>
