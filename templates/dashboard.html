@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Ticket ML</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="brand-icon">✈</span>
+                <div>
+                    <h1>Ticket ML</h1>
+                    <p>Prediksi Tiket Pesawat</p>
+                </div>
+            </div>
+
+            <nav class="menu">
+                <a href="/" class="menu-link active">Dashboard</a>
+                <a href="/prediksi" class="menu-link">Prediksi Harga</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-info">
+                    <p>Model</p>
+                    <span>{{ summary.model_name }}</span>
+                </div>
+                <div class="sidebar-info">
+                    <p>Dataset</p>
+                    <span>{{ summary.dataset_name }}</span>
+                </div>
+                <div class="sidebar-info">
+                    <p>R² Score</p>
+                    <span>{{ summary.r2_score }}</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <div>
+                    <p class="eyebrow">Dashboard</p>
+                    <h2>Analisis Harga Tiket Pesawat</h2>
+                    <p class="page-description">Ringkasan model dan visualisasi untuk mendukung skripsi sistem prediksi harga tiket pesawat berbasis machine learning.</p>
+                </div>
+                <div class="summary-pill">Data: {{ summary.data_count }}</div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-stat">
+                    <span>Algoritma</span>
+                    <strong>{{ summary.model_name }}</strong>
+                </div>
+                <div class="dashboard-stat">
+                    <span>Dataset</span>
+                    <strong>{{ summary.dataset_name }}</strong>
+                </div>
+                <div class="dashboard-stat">
+                    <span>R² Score</span>
+                    <strong>{{ summary.r2_score }}</strong>
+                </div>
+            </div>
+
+            <section class="visual-grid">
+                <div class="visual-card">
+                    <h3>Distribusi Data Tiket Pesawat</h3>
+                    <p>Visualisasi distribusi harga berdasarkan kelas, maskapai, dan rute penting pada dataset tiket pesawat.</p>
+                    <img src="{{ url_for('static', filename='images/dashboard_price_analysis.png') }}" alt="Distribusi Data Tiket Pesawat" />
+                </div>
+                <div class="visual-card">
+                    <h3>Analisis Korelasi & Faktor</h3>
+                    <p>Heatmap menunjukkan korelasi antara fitur seperti maskapai, kelas, transit, durasi, dan harga tiket.</p>
+                    <img src="{{ url_for('static', filename='images/dashboard_heatmap.png') }}" alt="Analisis Korelasi dan Faktor yang Mempengaruhi Harga" />
+                </div>
+                <div class="visual-card">
+                    <h3>Perbandingan Performa Model</h3>
+                    <p>Performa model Random Forest dibandingkan dengan baseline dan metrik penting untuk prediksi harga tiket.</p>
+                    <img src="{{ url_for('static', filename='images/dashboard_feature_importance.png') }}" alt="Perbandingan Performa Model Machine Learning" />
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
