@@ -42,7 +42,7 @@ SUMMARY = {
     'model_name': 'Random Forest Regressor',
     'dataset_name': 'Airline Ticket Price',
     'data_count': '±9000',
-    'r2_score': '96.34%'
+    'r2_score': '99.33%'
 }
 
 @app.route('/')
@@ -68,8 +68,6 @@ def prediksi():
                 prediksi_text = '❌ Kota asal dan tujuan tidak boleh sama.'
             elif duration <= 0:
                 prediksi_text = '❌ Durasi perjalanan harus lebih dari 0 jam.'
-            elif days_left < 0:
-                prediksi_text = '❌ Hari menuju keberangkatan tidak boleh negatif.'
             elif stops not in [0, 1, 2]:
                 prediksi_text = '❌ Jumlah transit tidak valid.'
             else:
